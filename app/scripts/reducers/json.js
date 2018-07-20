@@ -1,14 +1,11 @@
 import produce from 'immer';
-import { LOADER, SECTION } from '../constants/page-type';
+
 import BulkLoader from '../loader/bulk-loader';
 
-// export const LOAD_JSON = '@@sample/LOAD_JSON';
-export const LOAD_SUCCESS = '@@sample/LOAD_SUCCESS';
-export const LOAD_FAIL = '@@sample/LOAD_FAIL';
-// export const SECTION = '@@sample/SECTION';
+export const LOAD_SUCCESS = '@@json/LOAD_SUCCESS';
+export const LOAD_FAIL = '@@json/LOAD_FAIL';
 
 const initialState = {
-  pageType: LOADER,
   data: null
 };
 
@@ -16,8 +13,8 @@ export default (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case LOAD_SUCCESS:
+      case LOAD_FAIL:
         draft.data = action.payload.data;
-        draft.pageType = action.payload.pageType;
         break;
     }
   });
@@ -30,8 +27,7 @@ export const loadJSON = url => {
           dispatch({
             type: LOAD_SUCCESS,
             payload: {
-              data: response,
-              pageType: SECTION
+              data: response
             }
           });
         }, 2000);

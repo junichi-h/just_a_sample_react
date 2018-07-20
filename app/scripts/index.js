@@ -10,7 +10,8 @@ import App from './components/app';
 
 const root = document.getElementById('root');
 render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
-root);
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  root
+);

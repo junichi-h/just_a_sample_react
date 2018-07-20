@@ -6,7 +6,7 @@ import reducer from '../reducers';
 
 const initialState = {};
 const enhancers = [];
-const middleware = [logger, promiseMiddleware, thunk];
+const middleware = [thunk, logger, promiseMiddleware];
 
 const composedEnhancers = compose(
   applyMiddleware(...middleware),

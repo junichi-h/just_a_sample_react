@@ -1,5 +1,5 @@
 {
-  "name": "react-boilerplate",
+  "name": "just_a_sample_react",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Junichi Honda <junichi.hnd@gmail.com>",
@@ -15,6 +15,7 @@
         }
       ],
       "@babel/plugin-proposal-object-rest-spread",
+      "@babel/plugin-proposal-class-properties",
       "styled-components"
     ],
     "presets": [
@@ -98,6 +99,7 @@
       ],
       "react/prop-types": "off",
       "react/jsx-no-bind": "off",
+      "react/jsx-indent": "off",
       "react/jsx-filename-extension": [
         "error",
         {
@@ -118,10 +120,17 @@
         "jsx": true,
         "experimentalObjectRestSpread": false
       }
+    },
+    "settings": {
+      "polyfills": [
+        "promises"
+      ]
     }
   },
   "stylelint": {
-    "processors": ["stylelint-processor-styled-components"],
+    "processors": [
+      "stylelint-processor-styled-components"
+    ],
     "extends": [
       "stylelint-config-recommended",
       "stylelint-config-styled-components"
@@ -148,6 +157,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.53",
     "@babel/core": "^7.0.0-beta.53",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.53",
     "@babel/polyfill": "^7.0.0-beta.53",
     "@babel/preset-env": "^7.0.0-beta.53",
@@ -220,10 +230,13 @@
     "webpack-notifier": "^1.6.0"
   },
   "dependencies": {
+    "gsap": "^2.0.1",
     "immer": "^1.3.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
+    "react-spring": "^5.4.0",
+    "react-transition-group": "^2.4.0",
     "recompose": "^0.27.1",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
