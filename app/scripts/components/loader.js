@@ -29,6 +29,7 @@ const Inner = styled.div`
   left: 50%;
   margin: -35px 0 0 -35px;
   animation: ${spin} 1s linear infinite;
+  will-change: animation;
 `;
 
 const Loader = () => (

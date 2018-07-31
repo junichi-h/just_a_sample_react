@@ -8,7 +8,7 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 import Loader from '../components/loader';
 import Section from '../components/section';
 import ButtonContainer from './button-container';
-import PageContainer from './page-container';
+// import PageContainer from './page-container';
 import { loadJSON } from '../reducers/sample';
 import { showButton } from '../reducers/button';
 import { onEnter, onExit } from '../reducers/animate';
@@ -19,16 +19,12 @@ const Container = styled(TransitionGroup)`
 `;
 
 const AppContainer = props => {
-  const { pageType, data, currentIndex } = props;
-  const sections = data
-    ? data.map(d => (
-        <Section
-          key={d.videoUrl}
-          background={d.style.background}
-          text={d.elements[0].text}
-        />
-      ))
-    : null;
+  const { pageType, data, currentIndex, isShowButton } = props;
+  const section = data ? (
+    <Section data={data} currentIndex={currentIndex} />
+  ) : null;
+  const contents = data ? section : <Loader />;
+  const button = isShowButton ? <ButtonContainer /> : null;
   return (
     <Fragment>
       <Container>
@@ -53,23 +49,15 @@ const AppContainer = props => {
               '%cExit ------->',
               'color:#00aeef;background:#3f3f3f;padding:.25em;font-size:20px;font-weight:bold;'
             );
-            console.log(element);
             if (element) {
               props.onExit(element, pageType);
             }
           }}
         >
-          <PageContainer>
-            <PageContainer.Loader>
-              <Loader />
-            </PageContainer.Loader>
-            <PageContainer.Section>
-              {sections && sections.length ? sections[currentIndex] : null}
-            </PageContainer.Section>
-          </PageContainer>
+          <div>{contents}</div>
         </Transition>
       </Container>
-      <ButtonContainer />
+      {button}
     </Fragment>
   );
 };
@@ -77,7 +65,8 @@ const AppContainer = props => {
 const mapStateToProps = state => ({
   data: state.sample.data,
   pageType: state.sample.pageType,
-  currentIndex: state.button.currentIndex
+  currentIndex: state.button.currentIndex,
+  isShowButton: state.button.isShowButton
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ loadJSON, showButton, onEnter, onExit }, dispatch);

@@ -1,7 +1,7 @@
 import produce from 'immer';
-import { Expo, Sine, TweenLite } from 'gsap';
+import { Sine, TweenLite } from 'gsap';
 
-import { LOADER, SECTION } from '../constants/page-type';
+import { LOADER } from '../constants/page-type';
 
 export const UPDATE_ANIMATION_STATE = '@@/animation/UPDATE_ANIMATION_STATE';
 
@@ -18,7 +18,7 @@ export default (state = initialState, action) =>
     }
   });
 
-const enter = (element, pageType, dispatch) => {
+/* const enter = (element, pageType, dispatch) => {
   let inner = null;
   switch (pageType) {
     case LOADER:
@@ -97,7 +97,7 @@ const enter = (element, pageType, dispatch) => {
 
       break;
   }
-};
+}; */
 
 export const onEnter = (element, pageType) => {
   return dispatch => {
@@ -105,7 +105,32 @@ export const onEnter = (element, pageType) => {
       `%conEnter :: pageType is ${pageType}`,
       'color: #ff8e71;background:#3f3f3f;padding:.25em;font-size:20px;font-weight:bold;'
     );
-    enter(element, pageType, dispatch);
+    TweenLite.fromTo(
+      element,
+      0.6,
+      {
+        alpha: 0
+      },
+      {
+        alpha: 1,
+        delay: 0.3,
+        ease: Sine.easeOut,
+        onComplete: () => {
+          dispatch({
+            type: UPDATE_ANIMATION_STATE,
+            payload: {
+              isAnimation: false
+            }
+          });
+          window.setTimeout(() => {
+            TweenLite.set(element, {
+              clearProps: 'alpha'
+            });
+          }, 20);
+        }
+      }
+    );
+    // enter(element, pageType, dispatch);
   };
 };
 

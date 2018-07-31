@@ -1,7 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Transition, animated } from 'react-spring';
+import { Easing } from 'react-spring/dist/addons';
+import { lifecycle } from 'recompose';
 
-const SectionInner = styled.div`
+const Container = styled.section`
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: ${props => props.bgColor};
+  transition: background-color 1s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transition;
+`;
+
+const SectionInner = styled(animated.div)`
   font-size: 40px;
   font-size: 4rem;
   display: flex;
@@ -10,21 +24,43 @@ const SectionInner = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  // transition: opacity 1s 1s cubic-bezier(0.23, 1, 0.32, 1);
-`;
-
-const Container = styled.section`
-  width: 100vw;
-  height: 100vh;
   position: absolute;
-  background-color: ${props => props.bgColor};
-  transition: background-color 1s cubic-bezier(0.19, 1, 0.22, 1);
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
 `;
 
-const Section = props => (
-  <Container bgColor={props.background}>
-    <SectionInner className="inner">{props.text}</SectionInner>
-  </Container>
-);
+const Section = props => {
+  const { data } = props;
+  const inner = data.map(d => style => (
+    <SectionInner style={style} key={d.elements[0].text}>
+      {d.elements[0].text}
+    </SectionInner>
+  ));
+  return (
+    <Container bgColor={props.data[props.currentIndex].style.background}>
+      <Transition
+        native
+        key={data[props.currentIndex].elements[0].text}
+        from={{ opacity: 0, transform: 'scale3d(0.6, 0.6, 1) rotate(0deg)' }}
+        enter={{ opacity: 1, transform: 'scale3d(1.0, 1.0, 1) rotate(720deg)' }}
+        leave={{ opacity: 0, transform: 'scale3d(0, 0, 1)' }}
+        config={{ duration: 1200, easing: Easing.circ }}
+      >
+        {inner[props.currentIndex]}
+      </Transition>
+    </Container>
+  );
+};
 
-export default Section;
+export default lifecycle({
+  componentDidMount() {
+    console.log(
+      '%cSection.js ComponentDidMount!',
+      'color:#00ff00;background:#3f3f3f;padding:.25em;font-size:20px;'
+    );
+  },
+  shouldComponentUpdate(nextProps) {
+    return nextProps.data && nextProps.currentIndex !== this.props.currentIndex;
+  }
+})(Section);

@@ -17,6 +17,7 @@ const ButtonContainer = styled.button`
   transition-duration: 0.6s;
   transition-property: border-radius;
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  outline: none;
 
   &:after {
     position: absolute;
