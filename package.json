@@ -151,8 +151,7 @@
     "lint": "yarn lint:js && yarn lint:css",
     "lint:js": "yarn lint:eslint -- ./app/scripts/**/*.js ",
     "lint:css": "stylelint './app/scripts/**/*.js'",
-    "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
-    "precommit": "lint-staged"
+    "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.53",
