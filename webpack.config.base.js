@@ -1,15 +1,26 @@
 import path from 'path';
-import webpack from 'webpack';
+import chalk from 'chalk';
 
-const MODE = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+import { config } from './gulp/constants/config';
+
+const MODE = process.env.NODE_ENV === 'prod' ? 'production' : 'development';
+
+console.log(
+    chalk.cyan(
+        `Attempting to bind to HOST environment variable: ${chalk.yellow(
+            chalk.bold.bgCyan(process.env.NODE_ENV)
+        )}`
+    )
+);
+
 
 export default {
 	mode: MODE,
 	cache: true,
 	target: 'web',
 	output: {
-		path: path.join(__dirname, '.tmp', 'assets', 'js'),
-    	publicPath: '/assets/js/',
+		path: path.join(__dirname, config.tmp, config.assets, config.js),
+    	publicPath: `/${config.assets}/${config.js}/`,
     	filename: '[name].bundle.js',
     	chunkFilename: '[chunkhash].js',
     	sourceMapFilename: '[name].map'

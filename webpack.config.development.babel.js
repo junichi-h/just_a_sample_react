@@ -2,13 +2,15 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 
 import baseConfig from './webpack.config.base';
+import { config } from './gulp/constants/config';
 
 export default merge.smart(baseConfig, {
 	entry: {
 		index: [
 			'react-hot-loader/patch',
 			'react-dev-utils/webpackHotDevClient',
-			'./app/scripts/index.js'
+			`./${config.app}/${config.script}/index.js`
+			// './app/scripts/index.js'
 		]
 	},
 	devtool: 'cheap-module-source-map',
