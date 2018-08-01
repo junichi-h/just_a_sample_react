@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import { config } from '../constants/config';
 
 const $ = gulpLoadPlugins();
 
@@ -10,20 +11,20 @@ gulp.task('extras', () => {
     '!app/*.pug'
   ], {
     dot: true
-  }).pipe(gulp.dest('dist'));
+  }).pipe(gulp.dest(config.dist));
 
   /* gulp.src([
       '.tmp/assets/styles/!**'
   ]).pipe(gulp.dest('dist/assets/styles'));*/
 
   gulp.src([
-    'app/assets/images/**'
+     `${config.app}/${config.assets}/data/**`
   ], {
     dot: false
-  }).pipe(gulp.dest('dist/assets/images'));
+  }).pipe(gulp.dest(`${config.dist}/${config.assets}/data/`));
 });
 
 gulp.task('build', ['html', 'extras'], () => {
-  return gulp.src('dist/**/*')
+  return gulp.src(`${config.dist}/**/*`)
       .pipe($.size({title: 'build', gzip: true}));
 });
