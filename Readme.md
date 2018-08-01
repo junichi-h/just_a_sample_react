@@ -34,3 +34,11 @@ yarn start
 ```
 
 Access to [http://localhost:9000](http://localhost:9000) with your brower.
+
+### build
+
+```bash
+yarn prod
+```
+
+will create `docs` folder.
