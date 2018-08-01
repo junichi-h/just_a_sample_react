@@ -1,4 +1,3 @@
-/* @flow */
 import 'ress/ress.css';
 import './bootstrap';
 import React from 'react';

@@ -11,7 +11,7 @@ import ButtonContainer from './button-container';
 import { loadJSON } from '../actions/async';
 import { showButton } from '../actions/button';
 import { hideLoader } from '../actions/section';
-import { onEnter, onExit } from '../reducers/animate';
+import { onEnter, onExit } from '../actions/animation';
 import { LOADER, SECTION } from '../constants/page-type';
 
 const Container = styled(TransitionGroup)`
