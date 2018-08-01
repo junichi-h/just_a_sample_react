@@ -12,7 +12,9 @@ const LoadingPage = () => (
   </Fragment>
 );
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  router: state.router
+});
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -28,6 +30,8 @@ export default connect(
   lifecycle({
     componentDidMount() {
       this.props.loadJSON('assets/data/section.json');
+      console.log('check -------->');
+      console.log(this.props.router);
     },
     shouldComponentUpdate(nextProps) {
       return this.props !== nextProps;

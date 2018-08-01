@@ -13,9 +13,7 @@ import Routes from './routes';
 
 const App = () => (
   <Router history={history}>
-    <div>
-      <Route render={({ location }) => <Routes location={location} />} />
-    </div>
+    <Route render={({ location }) => <Routes location={location} />} />
   </Router>
 );
 

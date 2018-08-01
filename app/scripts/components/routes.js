@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { pure } from 'recompose';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
+
 import LoadingPage from '../pages/loading-page';
 import SectionPage from '../pages/section-page';
 
@@ -23,12 +24,13 @@ const Routes = props => {
     '%cLocation',
     'color:#ff00ff;background:#3f3f3f;font-size:20px;padding:.24em;'
   );
+  console.log(props);
   console.log(location);
   if (data) {
     data.forEach((d, i) => {
       components.push(
         <Route
-          path={`/section0${i + 1}`}
+          path={`/section/:${i + 1}`}
           exact
           component={SectionPage}
           key={`section0${i + 1}`}
