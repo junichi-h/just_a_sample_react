@@ -8,10 +8,11 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 import Loader from '../components/loader';
 import Section from '../components/section';
 import ButtonContainer from './button-container';
-// import PageContainer from './page-container';
-import { loadJSON } from '../reducers/sample';
-import { showButton } from '../reducers/button';
+import { loadJSON } from '../actions/async';
+import { showButton } from '../actions/button';
+import { hideLoader } from '../actions/section';
 import { onEnter, onExit } from '../reducers/animate';
+import { LOADER, SECTION } from '../constants/page-type';
 
 const Container = styled(TransitionGroup)`
   position: relative;
@@ -30,10 +31,7 @@ const AppContainer = props => {
       <Container>
         <Transition
           key={pageType}
-          timeout={{
-            enter: 1000,
-            exit: 1000
-          }}
+          timeout={1200}
           mountOnEnter
           unmountOnExit
           onEnter={element => {
@@ -47,8 +45,9 @@ const AppContainer = props => {
           onExit={element => {
             console.log(
               '%cExit ------->',
-              'color:#00aeef;background:#3f3f3f;padding:.25em;font-size:20px;font-weight:bold;'
+              'color:#e5004f;background:#3f3f3f;padding:.25em;font-size:20px;font-weight:bold;'
             );
+            console.log(element);
             if (element) {
               props.onExit(element, pageType);
             }
@@ -63,13 +62,22 @@ const AppContainer = props => {
 };
 
 const mapStateToProps = state => ({
-  data: state.sample.data,
-  pageType: state.sample.pageType,
+  data: state.json.data,
+  pageType: state.section.pageType,
   currentIndex: state.button.currentIndex,
   isShowButton: state.button.isShowButton
 });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ loadJSON, showButton, onEnter, onExit }, dispatch);
+  bindActionCreators(
+    {
+      loadJSON,
+      showButton,
+      onEnter,
+      onExit,
+      hideLoader
+    },
+    dispatch
+  );
 export default connect(
   mapStateToProps,
   mapDispatchToProps
@@ -81,11 +89,20 @@ export default connect(
     componentWillReceiveProps(nextProps) {
       if (nextProps !== this.props) {
         if (nextProps.data) {
-          window.setTimeout(() => {
+          if (nextProps.pageType === LOADER) {
+            nextProps.hideLoader();
+          }
+          if (nextProps.pageType === SECTION && !nextProps.isShowButton) {
+            nextProps.showButton();
+          }
+          /* window.setTimeout(() => {
             this.props.showButton();
-          }, 1000);
+          }, 1000); */
         }
       }
+    },
+    shouldComponentUpdate(nextProps) {
+      return this.props !== nextProps;
     }
   })(AppContainer)
 );

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Transition, animated } from 'react-spring';
-import { Easing } from 'react-spring/dist/addons';
 import { lifecycle } from 'recompose';
 
 const Container = styled.section`
@@ -45,7 +44,7 @@ const Section = props => {
         from={{ opacity: 0, transform: 'scale3d(0.6, 0.6, 1) rotate(0deg)' }}
         enter={{ opacity: 1, transform: 'scale3d(1.0, 1.0, 1) rotate(720deg)' }}
         leave={{ opacity: 0, transform: 'scale3d(0, 0, 1)' }}
-        config={{ duration: 1200, easing: Easing.circ }}
+        config={{ tension: 10, velocity: 10 }}
       >
         {inner[props.currentIndex]}
       </Transition>

@@ -18,6 +18,7 @@ const ButtonContainer = styled.button`
   transition-property: border-radius;
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
   outline: none;
+  pointer-events: ${props => (props.isEnabled ? 'none' : 'auto')};
 
   &:after {
     position: absolute;
@@ -43,6 +44,7 @@ const ButtonContainer = styled.button`
 const Button = props => (
   <Fragment>
     <ButtonContainer
+      isEnabled={props.isEnabled}
       onClick={event => {
         event.preventDefault();
         props.onClick();
