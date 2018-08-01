@@ -1,5 +1,5 @@
 export const config = {
-  dist: 'doc',
+  dist: 'docs',
   assets: 'assets',
   tmp: '.tmp',
   js: 'js',
